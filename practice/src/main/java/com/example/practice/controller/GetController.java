@@ -1,5 +1,6 @@
 package com.example.practice.controller;
 
+import com.example.practice.dto.MemberDto;
 import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
@@ -30,9 +31,9 @@ public class GetController {
     @GetMapping("/request")
     public String getRequestParam(
             @RequestParam String name,
-            @RequestParam String id,
-            @RequestParam String email){
-        return name + " " + id + " " + email;
+            @RequestParam String email,
+            @RequestParam String organization){
+        return name + " " + email + " " + organization;
     }
 
 //    5. RequestParam에 Mapping 활용
@@ -45,6 +46,12 @@ public class GetController {
         });
 
         return sb.toString();
+    }
+
+//    6. DTO객체 활용
+    @GetMapping("/request-dto")
+    public String getRequestParamDto(MemberDto memberDto){
+        return memberDto.toString();
     }
 
 }
