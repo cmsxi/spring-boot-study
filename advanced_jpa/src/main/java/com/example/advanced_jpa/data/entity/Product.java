@@ -31,7 +31,7 @@ public class Product {
 
     private LocalDateTime createdAt;
 
-    private LocalDateTime updateAt;
+    private LocalDateTime updatedAt;
 
     // @Transient: 엔티티에 선언되어 있는 필드지만 db에서 필요 없을 경우 사용
 

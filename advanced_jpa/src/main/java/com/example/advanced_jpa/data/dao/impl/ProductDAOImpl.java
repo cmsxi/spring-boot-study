@@ -32,8 +32,16 @@ public class ProductDAOImpl implements ProductDAO {
 
     @Override
     public Product selectProduct(Long number){
-        Product selectedProduct = productRepository.getReferenceById(number);
+        if(number == null) {
+            return null;
+        }
+        Product selectedProduct = productRepository.findByNumber(number).orElseGet(()->{
+            return null;
+        }); // 책에서는 getReferenceById 사용했었음
 
+        if(selectedProduct == null) {
+            System.out.println("null 임");
+        }
         return selectedProduct;
     }
 
@@ -48,13 +56,12 @@ public class ProductDAOImpl implements ProductDAO {
             Product product = selectedProduct.get();
 
             product.setName(name);
-            product.setUpdateAt(LocalDateTime.now());
+            product.setUpdatedAt(LocalDateTime.now());
 
             updatedProduct = productRepository.save(product);
         }else{
             throw new Exception();
         }
-
         return updatedProduct;
     }
 
@@ -69,7 +76,5 @@ public class ProductDAOImpl implements ProductDAO {
         } else{
             throw new Exception();
         }
-
     }
-
 }
