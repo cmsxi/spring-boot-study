@@ -3,6 +3,7 @@ package com.example.advanced_jpa.controller;
 import com.example.advanced_jpa.data.dto.ChangeProductNameDto;
 import com.example.advanced_jpa.data.dto.ProductDto;
 import com.example.advanced_jpa.data.dto.ProductResponseDto;
+import com.example.advanced_jpa.data.dto.ResponseDto;
 import com.example.advanced_jpa.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,10 +22,13 @@ public class ProductController {
     }
 
     @GetMapping()
-    public ResponseEntity<ProductResponseDto> getProduct(Long number) {
+    public ResponseDto<?> getProduct(Long number) {
         ProductResponseDto productResponseDto = productService.getProduct(number);
-
-        return ResponseEntity.status(HttpStatus.OK).body(productResponseDto);
+        if(productResponseDto.getNumber() == null ) {
+            return new ResponseDto<>(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(),
+                    "찾는 값이 없습니다.");
+        }
+        return new ResponseDto<>(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(), productResponseDto);
     }
 
     @PostMapping()

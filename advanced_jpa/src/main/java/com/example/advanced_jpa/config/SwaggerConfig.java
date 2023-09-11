@@ -23,7 +23,7 @@ public class SwaggerConfig {
 
         return GroupedOpenApi.builder()
                 .group("API Document v1")
-                .pathsToMatch(paths)
+                .pathsToMatch("/**")
                 .build();
     }
 }
