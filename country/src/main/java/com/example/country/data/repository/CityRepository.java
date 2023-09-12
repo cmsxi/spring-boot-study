@@ -21,4 +21,7 @@ public interface CityRepository extends JpaRepository<City, Integer> {
 
     long countByCountryCode(String countryCode);
 
+    Optional<List<City>> findFirst5ByCountryCode(String countryCode);
+    // 5개의 결과만 보이게 하고 싶을 때 활용
+
 }

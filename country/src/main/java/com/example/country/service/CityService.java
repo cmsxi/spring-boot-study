@@ -18,20 +18,30 @@ public class CityService {
     }
 
     public List<City> getCity(CityRequestDto cityRequestDto){
-        if (cityRequestDto.getPopulation() != null) {
-            List<City> searchByCountryCodeAndPopulation = cityRepository.findAllByCountryCodeAndPopulation(cityRequestDto.getCountryCode(), cityRequestDto.getPopulation()).orElseGet(()->{
+        if (countCity(cityRequestDto)>=5){
+            List<City> searchByCountryCode = cityRepository.findFirst5ByCountryCode(cityRequestDto.getCountryCode()).orElseGet(()->{
                 return null;
             });
-            System.out.println("searchByCountryCodeAndPopulation = " + searchByCountryCodeAndPopulation);
-            return searchByCountryCodeAndPopulation;
-        } else {
-            List<City> searchByCountryCode = cityRepository.findAllByCountryCode(cityRequestDto.getCountryCode()).orElseGet(()->{
-                return null;
-            });
-
-            System.out.println("searchByCountryCode = " + searchByCountryCode);
             return searchByCountryCode;
         }
+        else{
+            if (cityRequestDto.getPopulation() != null) {
+                List<City> searchByCountryCodeAndPopulation = cityRepository.findAllByCountryCodeAndPopulation(cityRequestDto.getCountryCode(), cityRequestDto.getPopulation()).orElseGet(()->{
+                    return null;
+                });
+                System.out.println("searchByCountryCodeAndPopulation = " + searchByCountryCodeAndPopulation);
+                return searchByCountryCodeAndPopulation;
+            } else {
+                List<City> searchByCountryCode = cityRepository.findAllByCountryCode(cityRequestDto.getCountryCode()).orElseGet(()->{
+                    return null;
+                });
+
+                System.out.println("searchByCountryCode = " + searchByCountryCode);
+                return searchByCountryCode;
+            }
+        }
+
+
     }
 
     public long countCity(CityRequestDto cityRequestDto){
